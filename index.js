@@ -9,7 +9,7 @@
 var Rbush = require( 'rbush' );
 var pointInPolygon = require( 'point-in-polygon' );
 var polygonUtils = require( './lib/polygon_utils' );
-var _ = require('lodash');
+
 
 /**
  * @property {rbush} rtree A spatial index for `this.polygons`.
@@ -54,7 +54,9 @@ PolygonLookup.prototype.searchForOnePolygon = function searchForOnePolygon( x, y
   // find the first polygon that actually intersects and return it
   }, this);
 
-  return _.find(polygons, function(polyObj) {
+  // We don't need lodash for this in ES6
+  // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_find
+  return polygons.find(function(polyObj) {
     return pointInPolygonWithHoles(point, polyObj);
   });
 };
